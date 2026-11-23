@@ -1,0 +1,44 @@
+WaterLens comparison
+Measurements in this report are generated.
+Train households: HH-TRAIN-01
+Test households: HH-HELD-01
+Configuration hashes: {'train': '943a347b64b8e092285799ca0c2a3d5e6eeea362162bdb4b7917023715ac3996', 'test': '4da348a21475cc71859954674d98ff4141f1410ff25259b628ea3635a5baa223'}
+
+Detector persistence
+  Parameters: flow 0.25 liters per interval, persistence 15 minutes
+  Precision: 0.5
+  Recall: 0.5
+  Median detection delay: 15.0 minutes
+  False alerts per eligible household-day: 1.0 (1 unmatched alarms / 1 eligible days)
+  Matched events:
+    E-HELD-LEAK-P 2026-06-15T10:00:00-07:00 matched persistence-HH-HELD-01-002 at 2026-06-15T10:15:00-07:00 (delay 15.0 minutes). Source readings: /workspace/docs/evidence/p04/fixtures/heldout/readings.csv
+  Unmatched alarms:
+    persistence-HH-HELD-01-001 2026-06-15T08:15:00-07:00 to 2026-06-15T08:40:00-07:00
+  Unmatched planted events:
+    E-HELD-LEAK-I 2026-06-15T13:00:00-07:00 to 2026-06-15T13:35:00-07:00
+
+Detector threshold
+  Parameters: flow 0.25 liters per interval, persistence 0 minutes
+  Precision: 0.3333333333333333
+  Recall: 1.0
+  Median detection delay: 0.0 minutes
+  False alerts per eligible household-day: 4.0 (4 unmatched alarms / 1 eligible days)
+  Matched events:
+    E-HELD-LEAK-P 2026-06-15T10:00:00-07:00 matched threshold-HH-HELD-01-003 at 2026-06-15T10:00:00-07:00 (delay 0.0 minutes). Source readings: /workspace/docs/evidence/p04/fixtures/heldout/readings.csv
+    E-HELD-LEAK-I 2026-06-15T13:00:00-07:00 matched threshold-HH-HELD-01-004 at 2026-06-15T13:00:00-07:00 (delay 0.0 minutes). Source readings: /workspace/docs/evidence/p04/fixtures/heldout/readings.csv
+  Unmatched alarms:
+    threshold-HH-HELD-01-001 2026-06-15T07:00:00-07:00 to 2026-06-15T07:10:00-07:00
+    threshold-HH-HELD-01-002 2026-06-15T08:00:00-07:00 to 2026-06-15T08:40:00-07:00
+    threshold-HH-HELD-01-005 2026-06-15T13:15:00-07:00 to 2026-06-15T13:20:00-07:00
+    threshold-HH-HELD-01-006 2026-06-15T13:30:00-07:00 to 2026-06-15T13:35:00-07:00
+  Unmatched planted events:
+
+Limitations:
+- Every bundled volume is generated. A score is not a statement about a real building.
+- One meter per household. No shutoff, billing, water-quality, or inspection conclusion.
+- The threshold and persistence baselines are reference rules, not a commercial detector.
+- Missing intervals are listed and are not interpolated into a qualified run.
+- An alarm uses only the current run. Later readings do not move its start earlier.
+- A household-day below 90 percent observed slots is omitted from the false-alert denominator.
+
+Trace a row in report.html back to the timestamp in the held-out readings.csv named in the match.

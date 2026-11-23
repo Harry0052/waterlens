@@ -12,6 +12,7 @@ from waterlens.detectors import predict
 from waterlens.errors import WaterLensError
 from waterlens.parse import load_fixture
 from waterlens.score import score_alarms, tune
+from waterlens.workflow import run_demo, score_external
 
 
 def _emit(payload: dict) -> None:
@@ -149,6 +150,21 @@ def evaluate_command(train: Path, test: Path, detector: str, output: Path) -> in
     return 0
 
 
+def demo_command(output: Path) -> int:
+    report = run_demo(output)
+    print(f"wrote {output / 'report.html'}", file=sys.stderr)
+    print("Open report.html, then use summary.txt for the same figures in text.", file=sys.stderr)
+    _emit(report)
+    return 0
+
+
+def score_command(fixture: Path, alarms: Path, output: Path) -> int:
+    report = score_external(fixture, alarms, output)
+    print(f"wrote {output / 'score.json'}", file=sys.stderr)
+    _emit(report)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="waterlens",
@@ -165,6 +181,12 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--test", required=True, type=Path, help="Held-out fixture directory")
     evaluate.add_argument("--detector", required=True, choices=["persistence", "threshold"])
     evaluate.add_argument("--output", required=True, type=Path, help="Directory for score.json and summary.txt")
+    demo = sub.add_parser("demo", help="Generate the sample households, score both baselines, and write the report")
+    demo.add_argument("--output", required=True, type=Path, help="Directory for the report, timeline, and fixtures")
+    score = sub.add_parser("score", help="Score an alarm CSV. The file is validated and is not executed.")
+    score.add_argument("--fixture", required=True, type=Path, help="Fixture directory with readings, events, and manifest")
+    score.add_argument("--alarms", required=True, type=Path, help="Predicted alarm intervals")
+    score.add_argument("--output", required=True, type=Path, help="Directory for score.json")
     return parser
 
 
@@ -176,10 +198,22 @@ def main(argv: list[str] | None = None) -> int:
             return validate_command(args.fixture)
         if args.command == "evaluate":
             return evaluate_command(args.train, args.test, args.detector, args.output)
+        if args.command == "demo":
+            return demo_command(args.output)
+        if args.command == "score":
+            return score_command(args.fixture, args.alarms, args.output)
         parser.error(f"unknown command {args.command}")
         return 2
     except WaterLensError as exc:
         return _fail(exc)
+    except SystemExit as exc:
+        code = exc.code
+        if code is None:
+            return 0
+        if isinstance(code, int):
+            return code
+        print(str(code), file=sys.stderr)
+        return 2
     except BrokenPipeError:
         return 0
     except Exception as exc:

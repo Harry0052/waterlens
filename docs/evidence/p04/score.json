@@ -1,0 +1,292 @@
+{
+  "config_hashes": {
+    "test": "4da348a21475cc71859954674d98ff4141f1410ff25259b628ea3635a5baa223",
+    "train": "943a347b64b8e092285799ca0c2a3d5e6eeea362162bdb4b7917023715ac3996"
+  },
+  "detectors": {
+    "persistence": {
+      "config_hashes": {
+        "test": "4da348a21475cc71859954674d98ff4141f1410ff25259b628ea3635a5baa223",
+        "train": "943a347b64b8e092285799ca0c2a3d5e6eeea362162bdb4b7917023715ac3996"
+      },
+      "detector_id": "persistence",
+      "eligible_household_days": 1,
+      "excluded_household_days": [],
+      "false_alerts": 1,
+      "false_alerts_per_eligible_household_day": 1.0,
+      "false_negatives": 1,
+      "false_positives": 1,
+      "generated": true,
+      "limitations": [
+        "Every bundled volume is generated. A score is not a statement about a real building.",
+        "One meter per household. No shutoff, billing, water-quality, or inspection conclusion.",
+        "The threshold and persistence baselines are reference rules, not a commercial detector.",
+        "Missing intervals are listed and are not interpolated into a qualified run.",
+        "An alarm uses only the current run. Later readings do not move its start earlier.",
+        "A household-day below 90 percent observed slots is omitted from the false-alert denominator."
+      ],
+      "matches": [
+        {
+          "alarm_end": "2026-06-15T11:00:00-07:00",
+          "alarm_id": "persistence-HH-HELD-01-002",
+          "alarm_start": "2026-06-15T10:15:00-07:00",
+          "delay_minutes": 15.0,
+          "event_end": "2026-06-15T11:00:00-07:00",
+          "event_id": "E-HELD-LEAK-P",
+          "event_start": "2026-06-15T10:00:00-07:00",
+          "evidence": [
+            "2026-06-15T10:00:00-07:00",
+            "2026-06-15T10:05:00-07:00",
+            "2026-06-15T10:10:00-07:00",
+            "2026-06-15T10:15:00-07:00",
+            "2026-06-15T10:20:00-07:00",
+            "2026-06-15T10:25:00-07:00",
+            "2026-06-15T10:30:00-07:00",
+            "2026-06-15T10:35:00-07:00",
+            "2026-06-15T10:40:00-07:00",
+            "2026-06-15T10:45:00-07:00",
+            "2026-06-15T10:50:00-07:00",
+            "2026-06-15T10:55:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "kind": "leak_persistent",
+          "role": "planted_leak",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        }
+      ],
+      "median_delay_minutes": 15.0,
+      "missing_intervals": [
+        {
+          "household_id": "HH-HELD-01",
+          "reason": "missing_interval",
+          "start": "2026-06-15T18:30:00Z"
+        }
+      ],
+      "parameters": {
+        "flow_threshold_liters": 0.25,
+        "persistence_minutes": 15
+      },
+      "precision": 0.5,
+      "recall": 0.5,
+      "schema_version": "waterlens.report.v1",
+      "software_version": "0.1.0",
+      "test_households": [
+        "HH-HELD-01"
+      ],
+      "train_households": [
+        "HH-TRAIN-01"
+      ],
+      "true_positives": 1,
+      "unevaluable_events": [],
+      "units": {
+        "delay": "minutes",
+        "false_alerts": "count_per_eligible_household_day",
+        "volume": "liters_per_interval"
+      },
+      "unmatched_alarms": [
+        {
+          "alarm_end": "2026-06-15T08:40:00-07:00",
+          "alarm_id": "persistence-HH-HELD-01-001",
+          "alarm_start": "2026-06-15T08:15:00-07:00",
+          "detector_id": "persistence",
+          "evidence": [
+            "2026-06-15T08:00:00-07:00",
+            "2026-06-15T08:05:00-07:00",
+            "2026-06-15T08:10:00-07:00",
+            "2026-06-15T08:15:00-07:00",
+            "2026-06-15T08:20:00-07:00",
+            "2026-06-15T08:25:00-07:00",
+            "2026-06-15T08:30:00-07:00",
+            "2026-06-15T08:35:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        }
+      ],
+      "unmatched_events": [
+        {
+          "event_end": "2026-06-15T13:35:00-07:00",
+          "event_id": "E-HELD-LEAK-I",
+          "event_start": "2026-06-15T13:00:00-07:00",
+          "household_id": "HH-HELD-01",
+          "kind": "leak_intermittent",
+          "role": "planted_leak",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        }
+      ]
+    },
+    "threshold": {
+      "config_hashes": {
+        "test": "4da348a21475cc71859954674d98ff4141f1410ff25259b628ea3635a5baa223",
+        "train": "943a347b64b8e092285799ca0c2a3d5e6eeea362162bdb4b7917023715ac3996"
+      },
+      "detector_id": "threshold",
+      "eligible_household_days": 1,
+      "excluded_household_days": [],
+      "false_alerts": 4,
+      "false_alerts_per_eligible_household_day": 4.0,
+      "false_negatives": 0,
+      "false_positives": 4,
+      "generated": true,
+      "limitations": [
+        "Every bundled volume is generated. A score is not a statement about a real building.",
+        "One meter per household. No shutoff, billing, water-quality, or inspection conclusion.",
+        "The threshold and persistence baselines are reference rules, not a commercial detector.",
+        "Missing intervals are listed and are not interpolated into a qualified run.",
+        "An alarm uses only the current run. Later readings do not move its start earlier.",
+        "A household-day below 90 percent observed slots is omitted from the false-alert denominator."
+      ],
+      "matches": [
+        {
+          "alarm_end": "2026-06-15T11:00:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-003",
+          "alarm_start": "2026-06-15T10:00:00-07:00",
+          "delay_minutes": 0.0,
+          "event_end": "2026-06-15T11:00:00-07:00",
+          "event_id": "E-HELD-LEAK-P",
+          "event_start": "2026-06-15T10:00:00-07:00",
+          "evidence": [
+            "2026-06-15T10:00:00-07:00",
+            "2026-06-15T10:05:00-07:00",
+            "2026-06-15T10:10:00-07:00",
+            "2026-06-15T10:15:00-07:00",
+            "2026-06-15T10:20:00-07:00",
+            "2026-06-15T10:25:00-07:00",
+            "2026-06-15T10:30:00-07:00",
+            "2026-06-15T10:35:00-07:00",
+            "2026-06-15T10:40:00-07:00",
+            "2026-06-15T10:45:00-07:00",
+            "2026-06-15T10:50:00-07:00",
+            "2026-06-15T10:55:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "kind": "leak_persistent",
+          "role": "planted_leak",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        },
+        {
+          "alarm_end": "2026-06-15T13:05:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-004",
+          "alarm_start": "2026-06-15T13:00:00-07:00",
+          "delay_minutes": 0.0,
+          "event_end": "2026-06-15T13:35:00-07:00",
+          "event_id": "E-HELD-LEAK-I",
+          "event_start": "2026-06-15T13:00:00-07:00",
+          "evidence": [
+            "2026-06-15T13:00:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "kind": "leak_intermittent",
+          "role": "planted_leak",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        }
+      ],
+      "median_delay_minutes": 0.0,
+      "missing_intervals": [
+        {
+          "household_id": "HH-HELD-01",
+          "reason": "missing_interval",
+          "start": "2026-06-15T18:30:00Z"
+        }
+      ],
+      "parameters": {
+        "flow_threshold_liters": 0.25,
+        "persistence_minutes": 0
+      },
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "schema_version": "waterlens.report.v1",
+      "software_version": "0.1.0",
+      "test_households": [
+        "HH-HELD-01"
+      ],
+      "train_households": [
+        "HH-TRAIN-01"
+      ],
+      "true_positives": 2,
+      "unevaluable_events": [],
+      "units": {
+        "delay": "minutes",
+        "false_alerts": "count_per_eligible_household_day",
+        "volume": "liters_per_interval"
+      },
+      "unmatched_alarms": [
+        {
+          "alarm_end": "2026-06-15T07:10:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-001",
+          "alarm_start": "2026-06-15T07:00:00-07:00",
+          "detector_id": "threshold",
+          "evidence": [
+            "2026-06-15T07:00:00-07:00",
+            "2026-06-15T07:05:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        },
+        {
+          "alarm_end": "2026-06-15T08:40:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-002",
+          "alarm_start": "2026-06-15T08:00:00-07:00",
+          "detector_id": "threshold",
+          "evidence": [
+            "2026-06-15T08:00:00-07:00",
+            "2026-06-15T08:05:00-07:00",
+            "2026-06-15T08:10:00-07:00",
+            "2026-06-15T08:15:00-07:00",
+            "2026-06-15T08:20:00-07:00",
+            "2026-06-15T08:25:00-07:00",
+            "2026-06-15T08:30:00-07:00",
+            "2026-06-15T08:35:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        },
+        {
+          "alarm_end": "2026-06-15T13:20:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-005",
+          "alarm_start": "2026-06-15T13:15:00-07:00",
+          "detector_id": "threshold",
+          "evidence": [
+            "2026-06-15T13:15:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        },
+        {
+          "alarm_end": "2026-06-15T13:35:00-07:00",
+          "alarm_id": "threshold-HH-HELD-01-006",
+          "alarm_start": "2026-06-15T13:30:00-07:00",
+          "detector_id": "threshold",
+          "evidence": [
+            "2026-06-15T13:30:00-07:00"
+          ],
+          "household_id": "HH-HELD-01",
+          "source_readings": "/workspace/docs/evidence/p04/fixtures/heldout/readings.csv"
+        }
+      ],
+      "unmatched_events": []
+    }
+  },
+  "generated": true,
+  "limitations": [
+    "Every bundled volume is generated. A score is not a statement about a real building.",
+    "One meter per household. No shutoff, billing, water-quality, or inspection conclusion.",
+    "The threshold and persistence baselines are reference rules, not a commercial detector.",
+    "Missing intervals are listed and are not interpolated into a qualified run.",
+    "An alarm uses only the current run. Later readings do not move its start earlier.",
+    "A household-day below 90 percent observed slots is omitted from the false-alert denominator."
+  ],
+  "schema_version": "waterlens.report.v1",
+  "software_version": "0.1.0",
+  "test_households": [
+    "HH-HELD-01"
+  ],
+  "train_households": [
+    "HH-TRAIN-01"
+  ],
+  "units": {
+    "delay": "minutes",
+    "false_alerts": "count_per_eligible_household_day",
+    "volume": "liters_per_interval"
+  }
+}

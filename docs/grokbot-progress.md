@@ -7,7 +7,7 @@ Index
 | P01 | PASS | P02 |
 | P02 | PASS | P03 |
 | P03 | PASS | P04 |
-| P04 | not started | |
+| P04 | PASS | P05 |
 | P05 | not started | |
 | P06 | not started | |
 | P07 | not started | |
@@ -52,3 +52,17 @@ Index
 - Artifact paths: `docs/evidence/p03/score.json`, `docs/evidence/p03/summary.txt`, `fixtures/oracle/heldout_persistence.md`
 - Open issues: the comparison demo and HTML timeline are the next phase. Threshold results are covered by the tuner test (0.25 liters, 0 minutes) but not yet in the user report.
 - Next phase: P04
+
+## P04 — Ship the user workflow and reports
+
+- Phase and status: PASS
+- Files changed: `src/waterlens/report.py`, `src/waterlens/workflow.py`, `src/waterlens/cli.py`, `tests/test_demo.py`, `README.md`, `.gitignore`, `docs/evidence/p04/`, `docs/grokbot-progress.md`
+- Commands and results:
+  - `PYTHONPATH=src python -m pytest` → 17 passed.
+  - `PYTHONPATH=src python -m waterlens --help` → exit 0. Commands listed: validate, evaluate, demo, score.
+  - `PYTHONPATH=src python -m waterlens demo --output docs/evidence/p04` → exit 0. Persistence precision 0.5, recall 0.5, median delay 15.0 minutes, 1.0 false alerts per eligible household-day. Threshold precision 0.3333333333333333 (2/6), recall 1.0, median delay 0.0, 4 false alerts. Timeline CSV has 288 rows.
+  - `PYTHONPATH=src python -m waterlens score --fixture fixtures/invalid --alarms fixtures/heldout/events.csv --output /tmp/bad-score` → exit 2. Message names `volume_liters` and row 3.
+  - Browser check of `docs/evidence/p04/report.html` at 390px width: skip link is the first tab stop, shows a solid focus outline, and Enter moves the URL to `#timeline`. The status region reads the persistence and threshold figures. Page scroll width stays within the viewport. The only earlier console error was a missing favicon; the report now uses an empty icon link.
+- Artifact paths: `docs/evidence/p04/report.html`, `docs/evidence/p04/summary.txt`, `docs/evidence/p04/score.json`, `docs/evidence/p04/timeline.csv`
+- Open issues: performance budget, dependency review, and the validation write-up are the next phase.
+- Next phase: P05
