@@ -2,64 +2,105 @@
 
 Benchmark water-leak detectors against generated household usage patterns, and show where normal use triggers false alerts.
 
-WaterLens is a local scoring harness. It does not connect to a meter, shut off water, or decide that a building has a leak. Every fixture shipped here is synthetic.
+WaterLens is a local scoring harness. It does not connect to a meter, shut off water, bill anyone, or decide that a building has a leak. Every fixture shipped here is synthetic.
 
-## Setup
+There is no separate real-data demo, model demo, or hardware demo.
 
-Python 3.11 or newer. No runtime packages.
+## Supported toolchain
 
-```bash
-python -m pip install -e ".[dev]"
-```
+- Python 3.11 or newer. Verified on Python 3.12.3, Linux x86_64.
+- Standard library only at runtime (`zoneinfo`, CSV, JSON).
+- Tests use pytest 9.2.0 and the pins in `requirements-dev.txt`.
+- Build backend: setuptools 84.2.1.
+- Platforms: a normal CPython install on Linux, macOS, or Windows. The commands below are for a POSIX shell. On Windows, activate the virtual environment with `.venv\Scripts\activate`.
 
-The demo and the validator also run without an editable install:
+No paid service and no network access are required after installation.
 
-```bash
-PYTHONPATH=src python -m waterlens --help
-```
-
-## Validate a fixture
-
-Accept the labeled bundle (exact duplicate row, one missing interval, a repeated local hour on a timezone fold, and a configuration hash for each seed and split):
+## Clean install
 
 ```bash
-PYTHONPATH=src python -m waterlens validate fixtures/valid
+git clone https://github.com/Harry0052/waterlens.git
+cd waterlens
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-dev.txt --require-hashes
+python -m pip install -e . --no-deps
 ```
-
-Exit 0. Stdout is a JSON object with `"status": "ok"`. The command reports ignored duplicate rows and missing intervals on stderr.
-
-Reject the negative-volume bundle:
-
-```bash
-PYTHONPATH=src python -m waterlens validate fixtures/invalid
-```
-
-Exit 2. Stdout is JSON with `"category": "value"` and a message that names `volume_liters`, the offending value, the file, and the row.
 
 ## Demo
 
-Generate the training household and the held-out household, tune both baselines on the training split, and write the comparison:
-
 ```bash
-PYTHONPATH=src python -m waterlens demo --output out/demo
+python -m waterlens demo --output out/demo
 ```
 
-Exit 0. The report is `out/demo/report.html`. The same figures are in `out/demo/summary.txt`, and `out/demo/score.json` is the machine-readable copy. On the held-out day the persistence baseline has precision 0.5, recall 0.5, a 15-minute median delay, and 1 false alert per eligible household-day. That false alert is the irrigation run. The intermittent planted leak is missed.
+The command generates a training household and a held-out household, tunes both baselines on the training split, and writes the report.
 
-Open `report.html` in a browser. The skip link moves to the time-series table. A row for `E-HELD-LEAK-P` names `fixtures/heldout/readings.csv` under the output directory; that file has the 10:00 interval at 0.4000 liters.
+Expected persistence result on the held-out household:
 
-Score an alarm file you already computed. WaterLens validates the CSV and does not execute it:
+- precision 0.5
+- recall 0.5
+- median detection delay 15 minutes
+- 1 false alert per eligible household-day
+
+That false alert is the irrigation run from 08:15 to 08:40 local time. The persistent leak that starts at 10:00 is detected at 10:15. The intermittent planted leak is missed. The threshold baseline detects both planted leaks and raises more false alerts. Exact figures are in `out/demo/score.json`.
+
+Report location:
+
+- `out/demo/report.html` for the timeline and the comparison table
+- `out/demo/summary.txt` for the same figures as text
+- `out/demo/score.json` for the machine-readable result
+
+Open `report.html` in a browser. The first tab stop is a skip link to the time-series table. A matched row names the held-out `readings.csv`. The 10:00 interval in that file is 0.4000 liters.
+
+## Other commands
+
+Accept the labeled bundle:
 
 ```bash
-PYTHONPATH=src python -m waterlens score --fixture fixtures/heldout --alarms out/demo/alarms_persistence.csv --output out/external
+python -m waterlens validate fixtures/valid
 ```
 
-A bad fixture stops with exit 2 and a JSON error on stdout. For example, `fixtures/invalid` has a negative volume and the message names `volume_liters` and the row.
-
-## Tests
+Reject the negative-volume bundle (exit 2, and the message names `volume_liters` and the row):
 
 ```bash
-PYTHONPATH=src python -m pytest
+python -m waterlens validate fixtures/invalid
 ```
 
-Fixture terms, seeds, and file checksums are in each `manifest.json`. The schedules are original and are documented in `docs/project-contract.md`.
+Score an alarm CSV you already computed. The file is validated and is not executed:
+
+```bash
+python -m waterlens score --fixture fixtures/heldout --alarms out/demo/alarms_persistence.csv --output out/external
+```
+
+Help:
+
+```bash
+python -m waterlens --help
+```
+
+Tests:
+
+```bash
+python -m pytest
+```
+
+## Fixture terms
+
+The schedules are original and are generated by `waterlens.schedule.v1`. They are not measured household exports and they are not copied from pySIMDEUM, STREaM, or Flume. Each directory's `manifest.json` records the seed, the train or test split, the timezone, the configuration hash, the MIT license, and SHA-256 checksums of the CSV files. Redistribution follows the repository license.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Security
+
+See [SECURITY.md](SECURITY.md).
+
+## Changes
+
+See [CHANGELOG.md](CHANGELOG.md). Version 0.1.0 is the first scoring release.

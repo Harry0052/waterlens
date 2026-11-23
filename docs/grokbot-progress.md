@@ -9,7 +9,7 @@ Index
 | P03 | PASS | P04 |
 | P04 | PASS | P05 |
 | P05 | PASS | P06 |
-| P06 | not started | |
+| P06 | PASS | P07 |
 | P07 | not started | |
 
 ## P01 — Research overlap and confirm the MVP
@@ -80,3 +80,16 @@ Index
 - Artifact paths: `docs/validation.md`
 - Open issues: release notes, security contact, and the GitHub Actions workflow are the next phase. Hosted CI is P07.
 - Next phase: P06
+
+## P06 — Prepare a reproducible open-source release
+
+- Phase and status: PASS
+- Files changed: `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `requirements-dev.txt`, `.github/workflows/ci.yml`, `pyproject.toml`, `docs/grokbot-progress.md`
+- Commands and results:
+  - Clean copy in `/tmp/waterlens-clean` followed the README: venv, `pip install -r requirements-dev.txt --require-hashes`, `pip install -e . --no-deps`, `pytest` (21 passed), `python -m waterlens demo --output out/demo`. Persistence precision 0.5, recall 0.5, median delay 15, false alerts per eligible household-day 1.
+  - The first editable install failed because setuptools 84.2.1 rejects a license classifier next to `license = "MIT"`. The classifier was removed and the clean-room install then succeeded.
+  - Wheel `waterlens-0.1.0-py3-none-any.whl` contains the `waterlens` modules and `licenses/LICENSE`. It does not contain fixtures, tests, or bytecode. Installed into a fresh virtual environment with `PYTHONPATH` unset, `python -m waterlens demo` reproduced the same persistence score.
+  - Search of the tree found no private keys, `.env` files, or embedded tokens. Fixture manifests state the MIT terms and that the rows are synthetic.
+- Artifact paths: `requirements-dev.txt`, `.github/workflows/ci.yml`, `/tmp/waterlens-wheel/waterlens-0.1.0-py3-none-any.whl` (local build, not committed)
+- Open issues: hosted GitHub Actions has not run yet. That is P07.
+- Next phase: P07
