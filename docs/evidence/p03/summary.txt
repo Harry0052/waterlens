@@ -1,0 +1,21 @@
+WaterLens score
+Measurements in this report are generated.
+Detector: persistence
+Parameters: {"flow_threshold_liters": 0.25, "persistence_minutes": 15}
+Precision: 0.5
+Recall: 0.5
+Median delay (minutes): 15.0
+False alerts per eligible household-day: 1.0 (1 false alerts / 1 eligible days)
+Matches:
+  E-HELD-LEAK-P 2026-06-15T10:00:00-07:00 -> persistence-HH-HELD-01-002 2026-06-15T10:15:00-07:00 delay 15.0 minutes
+Unmatched alarms:
+  persistence-HH-HELD-01-001 2026-06-15T08:15:00-07:00 to 2026-06-15T08:40:00-07:00
+Unmatched planted events:
+  E-HELD-LEAK-I 2026-06-15T13:00:00-07:00 to 2026-06-15T13:35:00-07:00
+Limitations:
+  - Every bundled volume is generated. A score is not a statement about a real building.
+  - One meter per household. No shutoff, billing, water-quality, or inspection conclusion.
+  - The threshold and persistence baselines are reference rules, not a commercial detector.
+  - Missing intervals are listed and are not interpolated into a qualified run.
+  - An alarm uses only the current run. Later readings do not move its start earlier.
+  - A household-day below 90 percent observed slots is omitted from the false-alert denominator.

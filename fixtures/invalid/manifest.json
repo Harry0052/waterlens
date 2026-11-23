@@ -1,0 +1,38 @@
+{
+  "attribution": "WaterLens contributors",
+  "configurations": [
+    {
+      "config_hash": "943a347b64b8e092285799ca0c2a3d5e6eeea362162bdb4b7917023715ac3996",
+      "generator": "waterlens.schedule.v1",
+      "households": [
+        "HH-TRAIN-01"
+      ],
+      "id": "train",
+      "interval_seconds": 300,
+      "schema_version": "1",
+      "seed": 11,
+      "split": "train",
+      "timezone": "America/Los_Angeles"
+    }
+  ],
+  "files": {
+    "events.csv": {
+      "sha256": "2cecc23d6a6f330b545182068a274bfdc753da55f19f81bf290e84d1e541ca8c"
+    },
+    "readings.csv": {
+      "sha256": "b2db5e5904381cd9e2819a51da9bbff1a41caadaf4556725998d4607700213a0"
+    }
+  },
+  "generated": true,
+  "generator": "waterlens.schedule.v1",
+  "generator_version": "0.1.0",
+  "license": "MIT",
+  "notes": "Synthetic generated intervals. Not a measured household export.",
+  "schema_version": "1",
+  "source_url": null,
+  "units": {
+    "interval": "seconds",
+    "volume": "liters"
+  },
+  "use_terms": "Original synthetic intervals generated in this repository. Not a measured household export and not derived from pySIMDEUM, STREaM, or Flume. Redistribution follows the repository MIT license."
+}

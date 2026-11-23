@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools==84.2.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "waterlens"
+version = "0.1.0"
+description = "Benchmark household water-leak detectors on generated interval traces."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "WaterLens contributors"}]
+keywords = ["water", "leak", "benchmark", "synthetic"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0"]
+
+[project.scripts]
+waterlens = "waterlens.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Harry0052/waterlens"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

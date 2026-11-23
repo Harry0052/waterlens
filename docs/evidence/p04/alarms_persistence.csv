@@ -1,0 +1,3 @@
+alarm_id,household_id,detector_id,start,end,provenance
+persistence-HH-HELD-01-001,HH-HELD-01,persistence,2026-06-15T08:15:00-07:00,2026-06-15T08:40:00-07:00,generated
+persistence-HH-HELD-01-002,HH-HELD-01,persistence,2026-06-15T10:15:00-07:00,2026-06-15T11:00:00-07:00,generated

@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+out/
+dist/
+build/
+*.egg-info/
+.ruff_cache/
+.playwright-mcp/
