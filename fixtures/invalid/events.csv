@@ -1,0 +1,4 @@
+event_id,household_id,start,end,kind,role,volume_liters,pulses
+E-TRAIN-SHOWER,HH-TRAIN-01,2026-06-14T07:00:00-07:00,2026-06-14T07:10:00-07:00,shower,normal_use,12.0000,
+E-TRAIN-DISH,HH-TRAIN-01,2026-06-14T12:00:00-07:00,2026-06-14T12:10:00-07:00,appliance,normal_use,3.0000,
+E-TRAIN-LEAK,HH-TRAIN-01,2026-06-14T15:00:00-07:00,2026-06-14T15:20:00-07:00,leak_persistent,planted_leak,0.4000,
