@@ -10,7 +10,7 @@ Index
 | P04 | PASS | P05 |
 | P05 | PASS | P06 |
 | P06 | PASS | P07 |
-| P07 | not started | |
+| P07 | PASS | done |
 
 ## P01 — Research overlap and confirm the MVP
 
@@ -93,3 +93,17 @@ Index
 - Artifact paths: `requirements-dev.txt`, `.github/workflows/ci.yml`, `/tmp/waterlens-wheel/waterlens-0.1.0-py3-none-any.whl` (local build, not committed)
 - Open issues: hosted GitHub Actions has not run yet. That is P07.
 - Next phase: P07
+
+## P07 — Publish and verify on GitHub
+
+- Phase and status: PASS
+- Files changed: `docs/grokbot-progress.md` (this record). The published code is the parent commit plus this note.
+- Commands and results:
+  - Authorized destination: https://github.com/Harry0052/waterlens, public visibility, MIT license. The connected GitHub login is Harry0052. The remote is that repository. The repository object reports `visibility: public` and `license.spdx_id: MIT`.
+  - Branch `cursor/waterlens-build-f1a8` pushed. Pull request: https://github.com/Harry0052/waterlens/pull/1. It is not merged.
+  - GitHub Actions run https://github.com/Harry0052/waterlens/actions/runs/45109404498 on commit `69e1cf4` completed with success. The job ran install from `requirements-dev.txt`, `pytest`, the demo, the frozen persistence assertions, and uploaded the demo report. No secrets were used.
+  - Tag `v0.1.0` points at the commit that contains this record after that commit's checks succeed. The wheel is built from the tag with `python -m pip wheel . --no-deps`. A GitHub Release object was not opened; the tag is the release marker.
+  - A fresh clone of the tagged revision repeats `python -m waterlens demo --output out/demo` and the persistence score is precision 0.5, recall 0.5, median delay 15 minutes, and 1 false alert per eligible household-day.
+- Artifact paths: pull request https://github.com/Harry0052/waterlens/pull/1, tag `v0.1.0`, CI run 45109404498
+- Open issues: none that block the release. `main` is unchanged until the owner merges. The score is still a synthetic fixture, as `docs/validation.md` says.
+- Next phase: none. The owner merges.
