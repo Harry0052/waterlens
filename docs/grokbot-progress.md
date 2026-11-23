@@ -8,7 +8,7 @@ Index
 | P02 | PASS | P03 |
 | P03 | PASS | P04 |
 | P04 | PASS | P05 |
-| P05 | not started | |
+| P05 | PASS | P06 |
 | P06 | not started | |
 | P07 | not started | |
 
@@ -66,3 +66,17 @@ Index
 - Artifact paths: `docs/evidence/p04/report.html`, `docs/evidence/p04/summary.txt`, `docs/evidence/p04/score.json`, `docs/evidence/p04/timeline.csv`
 - Open issues: performance budget, dependency review, and the validation write-up are the next phase.
 - Next phase: P05
+
+## P05 — Verify correctness, security, and performance
+
+- Phase and status: PASS
+- Files changed: `docs/validation.md`, `tests/test_harden.py`, `src/waterlens/report.py`, `pyproject.toml`, `docs/grokbot-progress.md`
+- Commands and results:
+  - `python -m compileall -q src tests` completed with no output.
+  - `PYTHONPATH=src python -m pytest` → 21 passed.
+  - Fresh `run_demo` on this host: 0.0226 seconds. Budget is 5 seconds. Held-out readings are 16,771 bytes.
+  - OSV on 2026-11-23: pytest 9.2.0 has 0 vulnerabilities. setuptools 84.2.1 has 0. setuptools 68.1.2, already on the image, has 7, so the build backend is pinned to 84.2.1. `pip-audit` could not create a virtual environment because `python3-venv` is not installed; the OSV queries are the advisory check.
+  - A defect found in this phase: scoring an external alarm file crashed the text summary because `parameters` is null. The summary now explains that the alarms came from a file. The new test scores `alarms_persistence.csv` and still gets precision 0.5, recall 0.5, and a 15-minute delay.
+- Artifact paths: `docs/validation.md`
+- Open issues: release notes, security contact, and the GitHub Actions workflow are the next phase. Hosted CI is P07.
+- Next phase: P06

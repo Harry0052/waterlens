@@ -35,7 +35,14 @@ def comparison_summary(report: dict) -> str:
     ]
     for name, section in report["detectors"].items():
         lines.append(f"Detector {name}")
-        lines.append(f"  Parameters: flow {section['parameters']['flow_threshold_liters']} liters per interval, persistence {section['parameters']['persistence_minutes']} minutes")
+        if section.get("parameters"):
+            lines.append(
+                "  Parameters: flow "
+                f"{section['parameters']['flow_threshold_liters']} liters per interval, "
+                f"persistence {section['parameters']['persistence_minutes']} minutes"
+            )
+        else:
+            lines.append("  Parameters: alarms were supplied in a file and were not produced by a tuned baseline.")
         lines.append(f"  Precision: {section['precision']}")
         lines.append(f"  Recall: {section['recall']}")
         lines.append(f"  Median detection delay: {section['median_delay_minutes']} minutes")
