@@ -1,0 +1,28 @@
+{
+  "case": "frozen held-out persistence detector",
+  "method": "Hand count on fixtures/heldout. HH-HELD-01, 2026-06-15 America/Los_Angeles, 300-second intervals. Training on HH-TRAIN-01 selects 0.25 liters and 15 minutes because that is the longest persistence in the grid that still catches the 20-minute training leak and does not fire on the 10-minute shower or appliance cycle. Flow thresholds above 0.25 miss the 0.4 liter leak.",
+  "parameters": {
+    "flow_threshold_liters": 0.25,
+    "persistence_minutes": 15
+  },
+  "planted_events": 2,
+  "detected_events": 1,
+  "missed_event_id": "E-HELD-LEAK-I",
+  "false_alarm_overlaps_event_id": "E-HELD-IRR",
+  "matched_event_id": "E-HELD-LEAK-P",
+  "matched_event_start": "2026-06-15T10:00:00-07:00",
+  "matched_alarm_start": "2026-06-15T10:15:00-07:00",
+  "matched_alarm_end": "2026-06-15T11:00:00-07:00",
+  "delay_minutes": 15,
+  "irrigation_alarm_start": "2026-06-15T08:15:00-07:00",
+  "irrigation_alarm_end": "2026-06-15T08:40:00-07:00",
+  "true_positives": 1,
+  "false_positives": 1,
+  "false_negatives": 1,
+  "precision": 0.5,
+  "recall": 0.5,
+  "median_delay_minutes": 15,
+  "eligible_household_days": 1,
+  "false_alerts_per_eligible_household_day": 1,
+  "coverage_note": "288 expected slots minus the 11:30 local gap is 287 observed. 287/288 is above 0.90, so the household-day stays in the denominator. The gap is not inside either planted leak."
+}

@@ -6,7 +6,7 @@ Index
 | --- | --- | --- |
 | P01 | PASS | P02 |
 | P02 | PASS | P03 |
-| P03 | not started | |
+| P03 | PASS | P04 |
 | P04 | not started | |
 | P05 | not started | |
 | P06 | not started | |
@@ -39,3 +39,16 @@ Index
 - Artifact paths: `fixtures/valid/`, `fixtures/invalid/`, `fixtures/heldout/`, `fixtures/oracle/valid_fixture.md`
 - Open issues: scoring, detectors, and the HTML report are not in this phase. Held-out rows are generated so the frozen case is already on disk.
 - Next phase: P03
+
+## P03 — Build the working core
+
+- Phase and status: PASS
+- Files changed: `src/waterlens/detectors.py`, `src/waterlens/score.py`, `src/waterlens/cli.py`, `tests/test_score.py`, `fixtures/oracle/heldout_persistence.json`, `fixtures/oracle/heldout_persistence.md`, `docs/evidence/p03/score.json`, `docs/evidence/p03/summary.txt`, `docs/grokbot-progress.md`
+- Commands and results:
+  - `PYTHONPATH=src python -m pytest tests/test_score.py tests/test_validate.py` → 12 passed.
+  - `PYTHONPATH=src python -m waterlens evaluate --train fixtures/valid --test fixtures/heldout --detector persistence --output docs/evidence/p03` → exit 0.
+  - Observed score: precision 0.5, recall 0.5, median delay 15.0 minutes, one eligible household-day, one false alert. Match `E-HELD-LEAK-P` 2026-06-15T10:00:00-07:00 to alarm 2026-06-15T10:15:00-07:00. Unmatched alarm 2026-06-15T08:15:00-07:00 through 2026-06-15T08:40:00-07:00 (irrigation). Unmatched event `E-HELD-LEAK-I`. Parameters 0.25 liters and 15 minutes, tuned on the train split only.
+  - Competing alarms on one planted event score one true positive. A missing bucket prevents a 15-minute run from being filled in. Dropping readings after confirmation keeps the same alarm start.
+- Artifact paths: `docs/evidence/p03/score.json`, `docs/evidence/p03/summary.txt`, `fixtures/oracle/heldout_persistence.md`
+- Open issues: the comparison demo and HTML timeline are the next phase. Threshold results are covered by the tuner test (0.25 liters, 0 minutes) but not yet in the user report.
+- Next phase: P04
